@@ -1,0 +1,33 @@
+import tkinter as tk
+from tkinter.ttk import Label, Button
+from time import strftime
+
+def update_time():
+    string = strftime('%H:%M:%S %p')
+    lbl.config(text=string)
+    lbl.after_id = lbl.after(1000, update_time)
+
+def start_clock():
+    update_time()
+
+def stop_clock():
+    lbl.after_cancel(lbl.after_id)
+
+root = tk.Tk()
+root.title('Clock')
+
+lbl = Label(root, font=('calibri', 40, 'bold'),
+            background='purple',
+            foreground='white')
+
+start_button = Button(root, text="Start", command=start_clock)
+start_button.pack(side='left', padx=10)
+
+stop_button = Button(root, text="Stop", command=stop_clock)
+stop_button.pack(side='right', padx=10)
+
+lbl.pack(anchor='center')
+
+update_time()
+
+root.mainloop()
